@@ -3,7 +3,7 @@
 :root {
   --primary-color: #dc3545;
   --dark-color: #333333;
-  --light-color: #f4f4f4;
+  --light-color: #b9b9b9;
   --danger-color: #dc3545;
   --success-color: #28a745;
 }
@@ -76,9 +76,14 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1rem;
   }
 
   &-content {
+    margin-bottom: .5rem;
+  }
+
+  &-author {
     margin-bottom: .5rem;
   }
 }
@@ -209,9 +214,14 @@ img {
 }
 
 .form-control {
+  color: rgba(0, 0, 0, .42);
+  position: relative;
   display: block;
-  color: #888;
-  margin-bottom: .8rem;
+  margin: 1rem 0 .8rem;
+
+  &.on-focus {
+    color: #3f51b5;
+  }
 
   &.invalid {
     color: var(--primary-color);

@@ -1,1 +1,77 @@
-<p>login-page works!</p>
+<form class="form" (ngSubmit)="submitForm()" [formGroup]="form">
+  <h2>Enter admin panel</h2>
+
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    {{ error }}
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{
+      'on-focus': isEmailFocused,
+       invalid: emailControl.invalid && emailControl.touched
+    }"
+  >
+    <div class="input-container">
+      <input
+        [ngClass]="{'no-border': isEmailFocused}"
+        (focus)="onFocus('email')"
+        (blur)="onBlur('email')"
+        type="email"
+        formControlName="email"
+      >
+      <label
+        [class.focus]="isEmailFocused"
+        for="email"
+        id="email"
+      >Email:</label>
+      <div
+        [class.show]="isEmailFocused"
+        class="border-bottom"
+      ></div>
+    </div>
+    <div *ngIf="emailControl.invalid && emailControl.touched" class="validation">
+      <small *ngIf="emailControl.errors.required">This field is required</small>
+      <small *ngIf="emailControl.errors.email">Email is not correct</small>
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{
+      'on-focus': isPasswordFocused,
+       invalid: passwordControl.invalid && passwordControl.touched
+    }"
+  >
+    <div class="input-container">
+      <input
+        [ngClass]="{'no-border': isPasswordFocused}"
+        (focus)="onFocus('password')"
+        (blur)="onBlur('password')"
+        [type]="passwordType"
+        formControlName="password"
+      >
+      <label
+        [class.focus]="isPasswordFocused"
+        for="password"
+        id="password"
+      >Password:</label>
+      <div
+        [class.show]="isPasswordFocused"
+        class="border-bottom"
+      ></div>
+      <div *ngIf="passwordControl.value?.length" class="icon" (click)="switchPasswordVisibility()">
+        <fa-icon title="Show password" *ngIf="!passwordVisibility; else visiblePassword" [icon]="eyeIcon"></fa-icon>
+        <ng-template #visiblePassword>
+          <fa-icon title="Hide password" [icon]="eyeSlashIcon"></fa-icon>
+        </ng-template>
+      </div>
+    </div>
+    <div *ngIf="passwordControl.invalid && passwordControl.touched" class="validation">
+      <small *ngIf="passwordControl.errors.required">This field is required</small>
+      <small *ngIf="passwordControl.errors.minlength">Password should contain at least {{ passwordControl.errors.minlength.requiredLength }} characters</small>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" type="submit" [disabled]="form.invalid || isSubmitted">Enter</button>
+</form>
