@@ -11,7 +11,7 @@ export class AdminLayoutComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    public auth: AuthService
   ) {
   }
 
@@ -20,7 +20,7 @@ export class AdminLayoutComponent implements OnInit {
 
   logout(event: Event) {
     event.preventDefault();
-    this.auth.logout()
+    this.auth.logout();
     this.router.navigate(['/admin', 'login']);
   }
 }

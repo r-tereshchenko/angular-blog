@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import "~quill/dist/quill.core.css";
+@import "~quill/dist/quill.snow.css";
 
 :root {
   --primary-color: #dc3545;
@@ -217,7 +219,83 @@ img {
   color: rgba(0, 0, 0, .42);
   position: relative;
   display: block;
-  margin: 1rem 0 .8rem;
+  margin: 1.5rem 0 .8rem;
+  label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.2s ease;
+    display: inline-block;
+
+    &.focused {
+      transform: translateY(-15px);
+      font-size: 10px;
+    }
+  }
+
+  input {
+    position: relative;
+    background-color: inherit;
+    color: rgba(0, 0, 0, .42);
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+    z-index: 2;
+  }
+
+  &.invalid {
+    input,
+    .ql-toolbar.ql-snow,
+    .ql-container.ql-snow {
+      border-color: var(--primary-color);
+    }
+  }
+
+  .input-container {
+    position: relative;
+
+    .icon {
+      position: absolute;
+      z-index: 3;
+      top: 6px;
+      right: 2px;
+      padding: 0 4px;
+      cursor: pointer;
+      color: #4e4a4a;
+    }
+
+    input {
+      padding-right: 28px;
+      padding-left: 0;
+      color: #000;
+      &.no-border {
+        border-bottom: none;
+      }
+    }
+
+    .border-bottom.show ~ input {
+      border-bottom: none;
+    }
+
+    .border-bottom {
+      position: relative;
+      height: 1px;
+      opacity: 0;
+      bottom: 2px;
+      transform: scale(.5);
+      border: 1px solid;
+      transition: transform .2s ease-in-out;
+
+      &.show {
+        opacity: 1;
+        transform: scale(1);
+
+        &-danger {
+          border-color: var(--primary-color);
+        }
+      }
+    }
+  }
 
   &.on-focus {
     color: #3f51b5;
@@ -245,7 +323,7 @@ textarea {
   width: 100%;
   padding: 0.4rem;
   font-size: 1.2rem;
-  border: 1px solid #ccc;
+  //border: 1px solid #ccc;
 }
 
 input[type='submit'],
@@ -303,3 +381,10 @@ table th {
     }
   }
 }
+
+
+input:-webkit-autofill, input:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px #f4f7f8 inset;
+  -webkit-text-fill-color: rgba(0, 0, 0, .42);
+}
+

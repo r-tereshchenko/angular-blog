@@ -3,23 +3,30 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AuthService } from '../admin/shared/services/auth.service';
+
+import { InputFocusDirective } from './directives/input-focus.directive';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
+  declarations: [
+    InputFocusDirective
+  ],
   imports: [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    QuillModule.forRoot()
   ],
   exports: [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    InputFocusDirective,
+    QuillModule
   ],
   providers: [
-    AuthService
   ]
 })
 

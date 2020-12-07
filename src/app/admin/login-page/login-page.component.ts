@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+
 import { User } from '../../shared/interfaces';
-import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 
 @Component({
@@ -13,24 +14,36 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class LoginPageComponent implements OnInit {
   @ViewChild('label', {static: false}) label: ElementRef;
+  public guardMessage: string;
 
+  // login page -> show/hide password logic
   eyeIcon = faEye;
   eyeSlashIcon = faEyeSlash;
+  passwordType = 'password';
+  passwordVisibility = false;
+
+  // boolean flags for adding class on inputs on (focus) || (blur)
   isEmailFocused = false;
   isPasswordFocused = false;
 
-  passwordType = 'password';
-  passwordVisibility = false;
   form: FormGroup;
   isSubmitted = false;
 
+  // Subscriptions for unsubscribe in onDestroy lifecycle hook
+
   constructor(
     private router: Router,
-    public auth: AuthService
+    public auth: AuthService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['login_again']) {
+        this.guardMessage = 'Please, log in'
+      }
+    })
     this.form = new FormGroup({
       email: new FormControl('', [
         Validators.required,
@@ -44,29 +57,29 @@ export class LoginPageComponent implements OnInit {
   }
 
   get emailControl() {
-    return this.form.get('email')
+    return this.form.get('email');
   }
 
   get passwordControl() {
-    return this.form.get('password')
+    return this.form.get('password');
   }
 
   submitForm(): void {
     if (this.form.invalid) {
-      this.form.get('email').markAsTouched()
-      this.form.get('password').markAsTouched()
+      this.form.get('email').markAsTouched();
+      this.form.get('password').markAsTouched();
     }
-    this.isSubmitted = true
+    this.isSubmitted = true;
 
     const user: User = {...this.form.value, returnSecureToken: true};
-    this.auth.login(user)
-      .subscribe((response) => {
-        this.isSubmitted = false
-        this.router.navigate(['/admin', 'dashboard'])
-      }, error => {
-        this.isSubmitted = false
-        console.log('Err: ', error)
-      })
+    this.auth.login(user).subscribe(() => {
+      this.form.reset();
+      this.router.navigate(['/admin', 'dashboard']);
+      this.isSubmitted = false;
+    }, error => {
+      console.log('Login-page Error: ', error);
+      this.isSubmitted = false;
+    });
   }
 
   switchPasswordVisibility(): void {
@@ -83,9 +96,9 @@ export class LoginPageComponent implements OnInit {
   }
 
   onBlur(val): void {
-    if (val === 'email' && !this.form.get('email').value.length) {
+    if (val === 'email' && !this.form.get('email').value?.length) {
       this.isEmailFocused = false;
-    } else if (val === 'password' && !this.form.get('password').value.length) {
+    } else if (val === 'password' && !this.form.get('password').value?.length) {
       this.isPasswordFocused = false;
     }
   }

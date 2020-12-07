@@ -1,32 +1,30 @@
 <form class="form" (ngSubmit)="submitForm()" [formGroup]="form">
   <h2>Enter admin panel</h2>
 
-  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
-    {{ error }}
+  <div class="alert alert-info" *ngIf="guardMessage">
+    {{ guardMessage }}
   </div>
 
   <div
+    #emailContainer
     class="form-control"
     [ngClass]="{
-      'on-focus': isEmailFocused,
        invalid: emailControl.invalid && emailControl.touched
     }"
   >
     <div class="input-container">
+      <label
+        #emailLabel
+        for="email"
+      >Email:</label>
       <input
-        [ngClass]="{'no-border': isEmailFocused}"
-        (focus)="onFocus('email')"
-        (blur)="onBlur('email')"
+        [app-focus]="{container: emailContainer, label: emailLabel, border: emailBorder}"
         type="email"
+        id="email"
         formControlName="email"
       >
-      <label
-        [class.focus]="isEmailFocused"
-        for="email"
-        id="email"
-      >Email:</label>
       <div
-        [class.show]="isEmailFocused"
+        #emailBorder
         class="border-bottom"
       ></div>
     </div>
@@ -37,27 +35,25 @@
   </div>
 
   <div
+    #passwordContainer
     class="form-control"
     [ngClass]="{
-      'on-focus': isPasswordFocused,
        invalid: passwordControl.invalid && passwordControl.touched
     }"
   >
     <div class="input-container">
+      <label
+        #passwordLabel
+        for="password"
+      >Password:</label>
       <input
-        [ngClass]="{'no-border': isPasswordFocused}"
-        (focus)="onFocus('password')"
-        (blur)="onBlur('password')"
+        [app-focus]="{container: passwordContainer, label: passwordLabel, border: passwordBorder}"
         [type]="passwordType"
         formControlName="password"
-      >
-      <label
-        [class.focus]="isPasswordFocused"
-        for="password"
         id="password"
-      >Password:</label>
+      >
       <div
-        [class.show]="isPasswordFocused"
+        #passwordBorder
         class="border-bottom"
       ></div>
       <div *ngIf="passwordControl.value?.length" class="icon" (click)="switchPasswordVisibility()">
@@ -69,8 +65,12 @@
     </div>
     <div *ngIf="passwordControl.invalid && passwordControl.touched" class="validation">
       <small *ngIf="passwordControl.errors.required">This field is required</small>
-      <small *ngIf="passwordControl.errors.minlength">Password should contain at least {{ passwordControl.errors.minlength.requiredLength }} characters</small>
+      <small *ngIf="passwordControl.errors.minlength">Password must contain at least {{ passwordControl.errors.minlength.requiredLength }} characters</small>
     </div>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    {{ error }}
   </div>
 
   <button class="btn btn-primary" type="submit" [disabled]="form.invalid || isSubmitted">Enter</button>

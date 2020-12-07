@@ -1,1 +1,71 @@
-<p>create-page works!</p>
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <h1>Create new post</h1>
+
+  <div
+    #titleContainer
+    class="form-control"
+    [ngClass]="{ invalid: titleControl.invalid && titleControl.touched }"
+  >
+    <div class="input-container">
+      <label
+        #titleLabel
+        for="title"
+      >Title</label>
+      <input
+        [app-focus]="{container: titleContainer, label: titleLabel, border: titleBorder}"
+        type="text"
+        id="title"
+        formControlName="title"
+      >
+      <div
+        #titleBorder
+        class="border-bottom"
+      ></div>
+    </div>
+    <div *ngIf="titleControl.invalid && titleControl.touched" class="validation">
+      <small *ngIf="titleControl.errors.required">This field is required</small>
+    </div>
+  </div>
+
+  <div
+    class="form-control"
+    [ngClass]="{ invalid: textControl.invalid && textControl.touched }"  >
+    <p>Post content</p>
+    <quill-editor formControlName="text"></quill-editor>
+    <div *ngIf="textControl.invalid && textControl.touched" class="validation">
+      <small *ngIf="textControl.errors.required">This field is required</small>
+    </div>
+  </div>
+
+  <div
+    #authorContainer
+    class="form-control"
+    [ngClass]="{ invalid: authorControl.invalid && authorControl.touched }"
+  >
+    <div class="input-container">
+      <label
+        #authorLabel
+        for="title"
+      >Author</label>
+      <input
+        [app-focus]="{container: authorContainer, label: authorLabel, border: authorBorder}"
+        type="text"
+        id="author"
+        formControlName="author"
+      >
+      <div
+        #authorBorder
+        class="border-bottom"
+      ></div>
+    </div>
+    <div *ngIf="authorControl.invalid && authorControl.touched" class="validation">
+      <small *ngIf="authorControl.errors.required">This field is required</small>
+    </div>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-block btn-dark"
+    [disabled]="form.invalid"
+  >Create post</button>
+</form>
