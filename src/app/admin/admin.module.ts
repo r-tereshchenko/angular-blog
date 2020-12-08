@@ -11,7 +11,6 @@ import { CreatePageComponent } from './create-page/create-page.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthGuard } from './shared/services/auth.guard';
-import { AuthService } from './shared/services/auth.service';
 
 const routes: Routes = [
   {
@@ -41,7 +40,6 @@ const routes: Routes = [
     SharedModule
   ],
   providers: [
-    AuthService,
     AuthGuard
   ],
   exports: [RouterModule],

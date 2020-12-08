@@ -1,0 +1,66 @@
+.admin-btn {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  left: 0;
+  color: #333;
+
+  &:hover::before,
+  &:hover::after,
+  &:hover .admin-btn-text::before,
+  &:hover .admin-btn-text::after, {
+    opacity: 1;
+    width: 50%;
+    height: 50%;
+    transition: all .3s ease-in-out;
+  }
+
+  &::before,
+  &::after,
+  .admin-btn-text::before,
+  .admin-btn-text::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    border: 2px solid black;
+    transition: all .3s ease-in-out;
+  }
+
+  &::before,
+  &::after {
+    top: 0;
+    border-bottom: none;
+  }
+
+  &::before {
+    left: 0;
+    border-right: none;
+  }
+
+  &::after {
+    right: 0;
+    border-left: none;
+  }
+
+  .admin-btn-text {
+
+    &::before,
+    &::after {
+      bottom: 0;
+      border-top: none;
+    }
+
+    &::before {
+      left: 0;
+      border-right: none;
+    }
+
+    &::after {
+      right: 0;
+      border-left: none;
+    }
+  }
+}

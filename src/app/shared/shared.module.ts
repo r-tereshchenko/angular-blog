@@ -3,9 +3,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { QuillModule } from 'ngx-quill';
 
 import { InputFocusDirective } from './directives/input-focus.directive';
-import { QuillModule } from 'ngx-quill';
+import { AuthService } from '../admin/shared/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { QuillModule } from 'ngx-quill';
     QuillModule
   ],
   providers: [
+    AuthService
   ]
 })
 

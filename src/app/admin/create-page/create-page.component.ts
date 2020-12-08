@@ -36,7 +36,6 @@ export class CreatePageComponent implements OnInit {
   }
 
   submitForm() {
-    console.log('form: ', this.form);
     if (this.form.invalid) {
       return
     }
@@ -48,9 +47,8 @@ export class CreatePageComponent implements OnInit {
       date: new Date()
     }
 
-    this.postsService.create(post).subscribe(() => {
+    this.postsService.createPost(post).subscribe(() => {
       this.form.reset()
     })
-    console.log(post);
   }
 }
