@@ -7,10 +7,12 @@ import { QuillModule } from 'ngx-quill';
 
 import { InputFocusDirective } from './directives/input-focus.directive';
 import { AuthService } from '../admin/shared/services/auth.service';
+import { CreditCardComponent } from './components/credit-card/credit-card.component';
 
 @NgModule({
   declarations: [
-    InputFocusDirective
+    InputFocusDirective,
+    CreditCardComponent
   ],
   imports: [
     HttpClientModule,
@@ -25,7 +27,8 @@ import { AuthService } from '../admin/shared/services/auth.service';
     ReactiveFormsModule,
     FontAwesomeModule,
     InputFocusDirective,
-    QuillModule
+    QuillModule,
+    CreditCardComponent
   ],
   providers: [
     AuthService
