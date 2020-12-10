@@ -1,62 +1,74 @@
-<div class="backdrop">
+<div data-close="true" class="backdrop" (click)="closeCard.emit($event)">
 
-<div class="debit">
-  <div class="face front">
-    <div class="front__header">
-      <div class="header-left">
-        <img src="assets/images/privat-logo-white.png" alt="bank-logo">
-        <span>For payments</span>
+  <div class="debit">
+
+    <div class="face front">
+      <div class="front__header">
+        <div class="header-left">
+          <img src="assets/images/privat-logo-white.png" alt="bank-logo">
+          <span>For payments</span>
+        </div>
+        <span class="header-right">debit</span>
       </div>
-      <span class="header-right">debit</span>
+      <div class="front__logo">
+        <img class="paypass-logo" src="assets/images/paypass-logo.png" alt="">
+        <div class="chip-logo-wrapper">
+          <img class="chip-logo" src="assets/images/card-chip-logo.png" alt="chip-logo">
+        </div>
+      </div>
+      <div class="front__number">
+        <div class="card-number">
+          <span>0123</span>
+          <span>4567</span>
+          <span>8901</span>
+          <span>2345</span>
+        </div>
+        <div class="card-date">01/24</div>
+      </div>
+      <div class="front__footer">
+        <span>KDV</span>
+      </div>
+      <div class="front__bgi"></div>
     </div>
-    <div class="front__logo">
-      <img class="paypass-logo" src="assets/images/paypass-logo.png" alt="">
-      <div class="chip-logo-wrapper">
-        <img class="chip-logo" src="assets/images/card-chip-logo.png" alt="chip-logo">
+
+    <div class="face back">
+      <div class="back__header">
+        <div class="header-phones">
+          <span>3700 (free mobile phones calls),</span>
+          <span>+38 (099) 123 45 67 (for international calls)</span>
+        </div>
+        <div class="header-code">
+          1599
+        </div>
+      </div>
+      <div class="back__magnetic-stripe"></div>
+      <div class="back__number">
+        <div class="card-number">
+          <span>0123</span>
+          <span>4567</span>
+          <span>8901</span>
+          <span>2345</span>
+        </div>
+        <div class="card-date">01/24</div>
+      </div>
+      <div class="back__footer">
+        <span>KDV</span>
+      </div>
+      <div class="back__debit-logo">
+        <div class="big-circle"></div>
+        <div class="small-circle"></div>
+        <div class="text">debit</div>
+      </div>
+      <div class="back__footer-text">
+        <span>ICA 3258 EP1317002a-HiCo072020</span>
+        <span>AT KБ &laquo;ПриватБанк&raquo;</span>
+        <span>Лицензия НБУ № 53 от 02.09.2010 г.</span>
       </div>
     </div>
-    <div class="front__number">
-      <div class="card-number">
-        <span>0123</span>
-        <span>4567</span>
-        <span>8901</span>
-        <span>2345</span>
-      </div>
-      <div class="card-date">01/24</div>
-    </div>
-    <div class="front__footer">
-      <span>KDV</span>
-    </div>
-    <div class="front__bgi"></div>
   </div>
-  <div class="face back">
-    <div class="back__header">
-      <div class="header-phones">
-        <span>3700 (free mobile phones calls),</span>
-        <span>+38 (099) 123 45 67 (for international calls)</span>
-      </div>
-      <div class="header-code">
-        1599
-      </div>
-    </div>
-    <div class="back__magnetic-stripe"></div>
-    <div class="back__number">
-      <div class="card-number">
-        <span>0123</span>
-        <span>4567</span>
-        <span>8901</span>
-        <span>2345</span>
-      </div>
-      <div class="card-date">01/24</div>
-    </div>
-    <div class="back__footer">
-      <span>KDV</span>
-    </div>
-    <div class="back__debit-logo">
-      <div class="big-circle"></div>
-      <div class="small-circle"></div>
-      <div class="text">debit</div>
-    </div>
+
+  <div data-close="true" class="close-card" title="Close card">
+    <span data-close="true">&times;</span>
   </div>
-</div>
+
 </div>

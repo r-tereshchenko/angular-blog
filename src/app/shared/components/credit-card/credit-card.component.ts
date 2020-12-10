@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-credit-card',
@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./credit-card.component.scss']
 })
 export class CreditCardComponent implements OnInit {
+  @Output() closeCard: EventEmitter<Event> = new EventEmitter<Event>()
 
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }
