@@ -1,5 +1,5 @@
 <div *ngIf="form; else loading">
-  <form [formGroup]="form" (ngSubmit)="submit()">
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
     <div
       #titleContainer
       class="form-control"
@@ -25,6 +25,23 @@
         <small *ngIf="titleControl.errors.required">This field is required</small>
       </div>
     </div>
+
+    <div
+      class="form-control"
+      [ngClass]="{ invalid: textControl.invalid && textControl.touched }"  >
+      <p>Post content</p>
+      <quill-editor formControlName="text"></quill-editor>
+      <div *ngIf="textControl.invalid && textControl.touched" class="validation">
+        <small *ngIf="textControl.errors.required">This field is required</small>
+      </div>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="form.invalid || isSubmitted"
+    >Save changes</button>
+
   </form>
 </div>
 
