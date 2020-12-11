@@ -36,7 +36,6 @@ const interceptor_provider = {
   providers: [
     interceptor_provider
   ],
-  exports: [],
   entryComponents: [
     CreditCardComponent
   ],

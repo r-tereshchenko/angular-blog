@@ -1,1 +1,33 @@
-<p>edit-page works!</p>
+<div *ngIf="form; else loading">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div
+      #titleContainer
+      class="form-control"
+      [ngClass]="{ invalid: titleControl.invalid && titleControl.touched }"
+    >
+      <div class="input-container">
+        <label
+          #titleLabel
+          for="title"
+        >Title</label>
+        <input
+          [app-focus]="{container: titleContainer, label: titleLabel, border: titleBorder}"
+          type="text"
+          id="title"
+          formControlName="title"
+        >
+        <div
+          #titleBorder
+          class="border-bottom"
+        ></div>
+      </div>
+      <div *ngIf="titleControl.invalid && titleControl.touched" class="validation">
+        <small *ngIf="titleControl.errors.required">This field is required</small>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #loading>
+  <p class="text-center">Loading...</p>
+</ng-template>

@@ -1,19 +1,22 @@
 <div *ngIf="posts.length; else loading">
   <div class="form-control">
-    <input type="text" placeholder="enter to find post...">
+    <input
+      [(ngModel)]="searchStr"
+      type="text"
+      placeholder="search post by its title...">
   </div>
   <table>
     <thead>
     <tr>
       <th>#</th>
       <th>Author</th>
-      <th>Name</th>
+      <th>Title</th>
       <th>Date</th>
       <th>Action</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let post of posts; let i = index">
+    <tr *ngFor="let post of posts | postsFilter: searchStr; let i = index">
       <td>{{i + 1}}</td>
       <td>{{post.author}}</td>
       <td>{{post.title}}</td>
@@ -23,7 +26,7 @@
           [routerLink]="['/admin', 'post', post.id, 'edit']"
           class="btn btn-link open"
         >Open</button>
-        <a href="" (click)="removePost(post.id)">Delete</a>
+        <a (click)="removePost(post.id)">Delete</a>
       </td>
     </tr>
     </tbody>
