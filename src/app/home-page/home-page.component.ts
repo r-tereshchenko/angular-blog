@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { PostsService } from '../shared/services/posts.service';
 import { Post } from '../shared/interfaces';
@@ -10,25 +10,13 @@ import { Post } from '../shared/interfaces';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit, OnDestroy {
-  posts: Post[]
-
-  // Subscriptions
-  postsSub: Subscription
+export class HomePageComponent implements OnInit {
+  posts$: Observable<Post[]>
 
   constructor(private postsService: PostsService) { }
 
   ngOnInit(): void {
-    this.postsSub = this.postsService.getPosts().subscribe((posts) => {
-      this.posts = posts
-    })
-  }
-
-  ngOnDestroy(): void {
-    if (this.postsSub) {
-      this.postsSub.unsubscribe();
-      this.postsSub = null;
-    }
+    this.posts$ = this.postsService.getPosts()
   }
 
 }

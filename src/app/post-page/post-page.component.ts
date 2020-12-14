@@ -1,9 +1,13 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { CreditCardComponent } from '../shared/components/credit-card/credit-card.component';
 import { RefDirective } from '../shared/directives/ref.directive';
+import { PostsService } from '../shared/services/posts.service';
+import { Post } from '../shared/interfaces';
 
 @Component({
   selector: 'app-post-page',
@@ -13,14 +17,22 @@ import { RefDirective } from '../shared/directives/ref.directive';
 export class PostPageComponent implements OnInit {
   @ViewChild(RefDirective, {static: false}) ref: RefDirective;
 
+  post$: Observable<Post>
+
   closeCardSub: Subscription;
 
   constructor(
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    private route: ActivatedRoute,
+    private postsService: PostsService
   ) {
   }
 
   ngOnInit(): void {
+    this.post$ = this.route.params
+      .pipe(
+        switchMap((params) => this.postsService.getPostById(params.id))
+      );
   }
 
   showCard() {
