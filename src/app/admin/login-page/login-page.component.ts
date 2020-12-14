@@ -6,6 +6,7 @@ import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 
 import { User } from '../../shared/interfaces';
 import { AuthService } from '../shared/services/auth.service';
+import { AlertService } from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-login-page',
@@ -22,10 +23,6 @@ export class LoginPageComponent implements OnInit {
   passwordType = 'password';
   passwordVisibility = false;
 
-  // boolean flags for adding class on inputs on (focus) || (blur)
-  isEmailFocused = false;
-  isPasswordFocused = false;
-
   form: FormGroup;
   isSubmitted = false;
 
@@ -34,7 +31,8 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private router: Router,
     public auth: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alertService: AlertService
   ) {
   }
 
@@ -79,29 +77,13 @@ export class LoginPageComponent implements OnInit {
       this.router.navigate(['/admin', 'dashboard']);
       this.isSubmitted = false;
     }, error => {
-      console.log('Login-page Error: ', error);
       this.isSubmitted = false;
+      this.alertService.danger(error.error.error.message)
     });
   }
 
   switchPasswordVisibility(): void {
     this.passwordType = this.passwordVisibility ? 'password' : 'text';
     this.passwordVisibility = !this.passwordVisibility;
-  }
-
-  onFocus(input): void {
-    if (input === 'email') {
-      this.isEmailFocused = true;
-    } else {
-      this.isPasswordFocused = true;
-    }
-  }
-
-  onBlur(val): void {
-    if (val === 'email' && !this.form.get('email').value?.length) {
-      this.isEmailFocused = false;
-    } else if (val === 'password' && !this.form.get('password').value?.length) {
-      this.isPasswordFocused = false;
-    }
   }
 }

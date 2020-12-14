@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Post } from '../../shared/interfaces';
 import { PostsService } from '../../shared/services/posts.service';
+import { AlertService } from '../shared/services/alert.service';
 
 @Component({
   selector: 'app-create-page',
@@ -11,16 +12,20 @@ import { PostsService } from '../../shared/services/posts.service';
 })
 export class CreatePageComponent implements OnInit {
 
-  form: FormGroup
+  form: FormGroup;
 
-  constructor(private postsService: PostsService) { }
+  constructor(
+    private postsService: PostsService,
+    private alertService: AlertService
+  ) {
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
       title: new FormControl(null, Validators.required),
       text: new FormControl(null, Validators.required),
       author: new FormControl(null, Validators.required)
-    })
+    });
   }
 
   get titleControl() {
@@ -37,7 +42,7 @@ export class CreatePageComponent implements OnInit {
 
   submitForm() {
     if (this.form.invalid) {
-      return
+      return;
     }
 
     const post: Post = {
@@ -45,10 +50,11 @@ export class CreatePageComponent implements OnInit {
       text: this.form.value.text,
       author: this.form.value.author,
       date: new Date()
-    }
+    };
 
     this.postsService.createPost(post).subscribe(() => {
-      this.form.reset()
-    })
+      this.form.reset();
+      this.alertService.success('Post has been created')
+    });
   }
 }
