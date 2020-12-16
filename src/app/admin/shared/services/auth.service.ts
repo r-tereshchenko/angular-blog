@@ -12,6 +12,7 @@ import { FirebaseAuthResponse } from '../../../shared/interfaces';
 
 export class AuthService {
   public error$: Subject<string> = new Subject<string>();
+  isTokenExpired = false;
 
   constructor(
     private http: HttpClient,
@@ -21,12 +22,19 @@ export class AuthService {
   get token(): string | null {
     const isExpiration = localStorage.getItem('fb-token-expiration');
     const expDate = new Date(localStorage.getItem('fb-token-expiration'));
+    if (isExpiration && new Date() > expDate) {
+      this.isTokenExpired = true;
+    }
+
     if (!isExpiration || new Date() > expDate) {
-      this.logout();
       return null;
     }
 
     return localStorage.getItem('fb-token');
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.token;
   }
 
   login(user): Observable<any> {
@@ -39,10 +47,6 @@ export class AuthService {
 
   logout() {
     this.setToken(null);
-  }
-
-  isAuthenticated(): boolean {
-    return !!this.token;
   }
 
   private setToken(response: FirebaseAuthResponse | null) {

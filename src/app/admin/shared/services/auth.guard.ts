@@ -23,11 +23,15 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       this.auth.logout();
-      this.router.navigate(['/admin', 'login'], {
-        queryParams: {
-          'login_again': true
-        }
-      });
+      if (this.auth.isTokenExpired) {
+        this.router.navigate(['/admin', 'login'], {
+          queryParams: {
+            'login_again': true
+          }
+        });
+      } else {
+        this.router.navigate(['/admin', 'login']);
+      }
     }
   }
 

@@ -36,11 +36,14 @@
       </div>
     </div>
 
-    <button
-      class="btn btn-primary"
-      type="submit"
-      [disabled]="form.invalid || isSubmitted"
-    >Save changes</button>
+    <div class="btn-wrapper">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="form.invalid || isSubmitted"
+      >Save changes</button>
+      <button class="btn btn-link" [routerLink]="['/admin', 'dashboard']">back</button>
+    </div>
 
   </form>
 </div>
